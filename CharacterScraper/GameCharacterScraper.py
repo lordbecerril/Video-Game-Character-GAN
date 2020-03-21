@@ -33,7 +33,7 @@ def main():
     print("Hello World, From The Video Game Character Web Scraper!")
     options = Options()
     options.add_argument("no-sandbox")
-    #options.add_argument("headless")
+    options.add_argument("headless")
     options.add_argument('--no-proxy-server')
     options.add_argument("start-maximized")
     options.add_argument("window-size=1900,1080");
@@ -51,10 +51,6 @@ def main():
             urllib.request.urlretrieve(image.get_attribute('src'), "data/"+str(count)+".png")
             count += 1
 
-        driver.execute_script('''window.open("about:blank", "_blank");''')
-        for handle in driver.window_handles:
-            print ("Handle is:" + str(handle)) #only one handle number
-            driver.switch_to_window(handle)
         print("##############################SLEEPING################################")
         time.sleep(10)
 

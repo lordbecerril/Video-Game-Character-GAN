@@ -1,9 +1,9 @@
+# CharacterScraper Docker file (COMING SOON)
 Docker container which runs the character scraper from http://www.game-art-hq.com <br/>
 
-Soon will be Dockerized... <br/>
+Build container with `docker build -t character_scraper .`  <br/>
 
-
-So far it is a python script with chromedriver in the same directory. <br/>
+Run with `docker run character_scraper` <br/>
 
 Things to change:<br/>
 - Remove Hardcoded URLS (All URLS are the same. There is a way to get the inner HTML hrefs of the Letter on the side panel) <br/>
