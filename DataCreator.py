@@ -28,7 +28,7 @@ for i in range(6400):
 #Create Dataframe
 train_data = pd.DataFrame(columns = columnNames)
 train_labels = pd.DataFrame(columns = ['image#'])
-'''
+
 # Get data from CharacterScraper/data and then Grayscale it and resize to 80x80
 directory = os.fsencode("./CharacterScraper/data")
 count = 0
@@ -49,7 +49,7 @@ for file in os.listdir(directory):
         continue
     else:
         continue
-'''
+
 #Create CSV file for Grayscaled images
 directory = os.fsencode("./Data/train_data/grayscale_images")
 i = 1
