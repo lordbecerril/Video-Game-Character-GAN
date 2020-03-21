@@ -2,6 +2,9 @@
 A part of the UNLV CS 489 final project. We are creating a GAN to generate video game
 characters
 
+## VGC_GAN.py
+The main script that does all the work.
+
 ## DataCreator.py
 Takes the RAW data from CharacterScraper/data and resizes them to 100 x 100 pixels. Saves them into the Data directory
 
@@ -9,7 +12,7 @@ Takes the RAW data from CharacterScraper/data and resizes them to 100 x 100 pixe
 This directory holds the processed and cleaned pixel data
 
 ### train_data
-Holds the training data. 1432 images.
+Holds the training data. 1432 images. each image is 80x80 pixels
 
 ## Character Scraper Directory
 This directory holds the RAW data and the web scraper made to collect the RAW data
