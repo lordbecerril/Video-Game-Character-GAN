@@ -17,11 +17,8 @@ RUN pip install webdriver_manager
 RUN pip install pyjwt
 RUN pip install requests
 
-WORKDIR /out
+WORKDIR /
 
-ADD riverdis.py /out
-ADD lastdata.py /out
-ADD config.py /out
+ADD GameCharacterScraper.py /
 
-RUN adduser -D -g '' independentus
-USER independentus
+CMD [ "python", "./GameCharacterScraper.py" ]
