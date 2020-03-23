@@ -1,5 +1,5 @@
 # Video-Game-Character-GAN
-UNLV CS 489 final project. We are creating a GAN to generate video game
+UNLV CS 489 Final Project. We are creating a GAN to generate video game
 characters
 
 **Team Memebers:** <br/> 
