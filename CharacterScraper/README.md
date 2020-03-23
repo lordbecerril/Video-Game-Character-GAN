@@ -1,5 +1,5 @@
 # CharacterScraper
-An html scraper script that will scrape the images from the following website: <br/>
+Created a scraper in python utilizing Selenium library that will scrape the images from the following website: <br/>
 http://www.game-art-hq.com/52702/the-game-art-hq/ <br/>
 It will iterate through the pages and save the raw images in a directory
 
