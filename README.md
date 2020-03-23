@@ -2,6 +2,11 @@
 A part of the UNLV CS 489 final project. We are creating a GAN to generate video game
 characters
 
+Team Memebers:<br/>
+Itzel Becerril <br/>
+Eric Becerril-Blas<br/>
+Erving Marure Sosa<br/>
+
 ## VGC_GAN.py
 The main script that does all the work.
 
