@@ -1,4 +1,8 @@
 # CharacterScraper
+An html scraper script that will scrape the images from the following website: <br/>
+http://www.game-art-hq.com/52702/the-game-art-hq/ <br/>
+It will iterate through the pages and save the raw images in a directory
+
 
 # CharacterScraper Docker file (COMING SOON)
 Docker container which runs the character scraper from http://www.game-art-hq.com <br/>
