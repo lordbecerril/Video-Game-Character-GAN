@@ -1,3 +1,5 @@
+# CharacterScraper
+
 # CharacterScraper Docker file (COMING SOON)
 Docker container which runs the character scraper from http://www.game-art-hq.com <br/>
 
