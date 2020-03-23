@@ -3,9 +3,9 @@ A part of the UNLV CS 489 final project. We are creating a GAN to generate video
 characters
 
 **Team Memebers:** <br/> 
-Itzel Becerril 
-Eric Becerril-Blas
-Erving Marure Sosa
+- Itzel Becerril 
+- Eric Becerril-Blas
+- Erving Marure Sosa
 
 ## VGC_GAN.py
 The main script that does all the work.
