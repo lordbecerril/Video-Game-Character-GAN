@@ -10,7 +10,7 @@ Erving Marure Sosa    <Github: https://eems20.github.io/>        <br/>
 Not only is this for a grade but it serves as a way for us to learn deep learning and how to create a GAN since it looks like we won't be covering it much in class. GANS are hot in the field of deep learning. We are focusing on implementing a Deep Convolutional GAN (DCGAN). A good paper we are using to aid in this endeavor is [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://arxiv.org/abs/1511.06434) <br/>
 
 ## What data did we use for this?
-Well, we had to create our own dataset. We did this by scraping the [Game Art HQ Character Database](http://www.game-art-hq.com/52702/the-game-art-hq/). Our scraper can be found in the *VideoGameCharacterScraper* directory of this repository. The data itself can be found in the Data directory. A sample of it can be seen below:
+Well, we had to create our own dataset. We did this by scraping the [Game Art HQ Character Database](http://www.game-art-hq.com/52702/the-game-art-hq/). Our scraper can be found in the *VideoGameCharacterScraper* directory of this repository. The data itself can be found in the Data directory. A sample of it can be seen below: <br/>
 ![Example Board](./Data/data_sample.png)
 
 
@@ -26,7 +26,7 @@ We are using data from the RGB images folder for this project
 ## So how are we doing this?
 So we are still in the process. Will update this part as we move forward. Our main script is *VGC_GAN.py*. We plan on utilizing an Amazon Web Services Deep Learning AMI EC2 instance. We are using the Python programming language and the Keras libraries.<br/>
 <br/>
-Our Generator Architecture is as follows:
+Our Generator Architecture is as follows:<br/>
 ![Generator](./Data/Generator_Arch.png)
 Notice the convolution layers. Pretty cool stuff.
 <br/>
