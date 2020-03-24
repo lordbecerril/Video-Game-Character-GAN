@@ -27,11 +27,11 @@ We are using data from the RGB images folder for this project
 So we are still in the process. Will update this part as we move forward. Our main script is *VGC_GAN.py*. We plan on utilizing an Amazon Web Services Deep Learning AMI EC2 instance. We are using the Python programming language and the Keras libraries.<br/>
 <br/>
 Our Generator Architecture is as follows:<br/>
-![Generator](./Data/Generator_Arch.png)
+![Generator](./Data/Generator_Arch.png)<br/>
 Notice the convolution layers. Pretty cool stuff.
 <br/>
 
-Our Discriminator Architecture is as follows:
+Our Discriminator Architecture is as follows:<br/>
 ![Discriminator](./Data/Discriminator_Arch.png)
 <br/>
 
