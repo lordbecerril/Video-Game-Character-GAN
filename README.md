@@ -2,9 +2,9 @@
 Hello there! This is our project for the UNLV CS 489 Introduction to Machine Learning Course! <br/>
 
 Team Members: <br/>
-Eric Becerril-Blas    <Github: https://github.com/lordbecerril>  <br/>
-Itzel Becerril        <Github: https://github.com/HadidBuilds>   <br/>
-Erving Marure Sosa    <Github: https://eems20.github.io/>        <br/>
+Eric Becerril-Blas    <Github: https://github.com/lordbecerril >  <br/>
+Itzel Becerril        <Github: https://github.com/HadidBuilds >   <br/>
+Erving Marure Sosa    <Github: https://eems20.github.io/ >        <br/>
 
 ## Purpose
 Not only is this for a grade but it serves as a way for us to learn deep learning and how to create a GAN since it looks like we won't be covering it much in class. GANS are hot in the field of deep learning. We are focusing on implementing a Deep Convolutional GAN (DCGAN). A good paper we are using to aid in this endeavor is [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://arxiv.org/abs/1511.06434) <br/>
