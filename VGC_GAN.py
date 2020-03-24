@@ -8,57 +8,55 @@
         We process the data and generate video game characters.
         Using a Deep Convolutional Generative Adversial Network.
 '''
+# ASCII Art libraries
 import pyfiglet
 from pyfiglet import Figlet
 
-
-from keras.optimizers import Adam, RMSprop
-
-from shutil import copyfile
-import os
-from keras.preprocessing.image import load_img ,img_to_array
-import matplotlib.pyplot as plt
-
+# Keras Libraries
 import keras
 from keras import layers
-import os
-import tensorflow as tf
+from keras.optimizers import Adam, RMSprop
 from keras.layers import BatchNormalization
-import numpy as np
-from skimage.io import imread
-from skimage.transform import resize
 from keras.utils.vis_utils import plot_model
-import numpy as np
+from keras.preprocessing.image import load_img ,img_to_array
+from keras.preprocessing import image
+
+# Tensorflow libraries
+import tensorflow as tf
+
+# skimage libraries
 from skimage.io import imread
 from skimage.transform import resize
 from skimage.transform import rescale
+
+# matplot lib
+import matplotlib.pyplot as plt
+
+# NumPy libraries
 import numpy as np
+
+# Libraries for file management
+from shutil import copyfile
+import os
+
+# Progress bar library
 from tqdm import tqdm
-import os
-from keras.preprocessing import image
 
 
-'''
-    Model below
-'''
-latent_dim = 80 # 80 dimesnion of latent variables
-height = 80
-width = 80
+# Global Variables below
+latent_dim = 80 # 80 dimesnion of latent variables... user for linear algebra operation
+height = 80 # 80 Pixel Height
+width = 80 # 80 Pixel Width
 channels = 3 # Every image has 3 channels: Red, Green, and Blue (RGB)
-import keras
-from keras import layers
-import os
-import tensorflow as tf
-from keras.layers import BatchNormalization
 
 
 def main():
+    # Print out super cool ASCII art banner
     custom_fig = Figlet(font='starwars')
     print(custom_fig.renderText('Hello World From VGC_GAN.py!!'))
 
-    print("\n")
-    print("Let us build our generator")
-    print("\n")
+    # Generator
+    print("\nLet us build our generator\n")
     '''
         Let us begin creating the GENERATOR!!! (https://www.youtube.com/watch?v=AJtedULP6fQ)
         Generator Architecture:
@@ -176,6 +174,27 @@ def main():
     print("\n")
     print("Let us build our actual GAN now")
     print("\n")
+    '''
+        To make the backpropagation possible for the Generator, we create new
+        network in Keras, which is Generator followed by Discriminator. In this
+        network, we freeze all the weights so that its weight do not changes.
+
+        GAN Architecture:
+        Model: "model_3"
+        _________________________________________________________________
+        Layer (type)                 Output Shape              Param #
+        =================================================================
+        input_3 (InputLayer)         (None, 80)                0
+        _________________________________________________________________
+        model_1 (Model)              (None, 80, 80, 3)         28822723
+        _________________________________________________________________
+        model_2 (Model)              (None, 1)                 1244001
+        =================================================================
+        Total params: 30,066,724
+        Trainable params: 28,822,723
+        Non-trainable params: 1,244,001
+        _________________________________________________________________
+    '''
     discriminator_optimizer = keras.optimizers.RMSprop(lr=0.0008, clipvalue=1.0, decay=1e-8)
     discriminator.compile(optimizer=discriminator_optimizer, loss='binary_crossentropy')
 
@@ -194,68 +213,64 @@ def main():
     print("Train Model")
     print("\n")
     list_file = os.listdir(os.fsencode("./Data/train_data/rgb_images"))
-    print("list file is")
-    print(list_file)
-
 
     data_train_gan = np.array([resize(imread(os.path.join('./Data/train_data/rgb_images',file_name.decode("utf-8"))), (80, 80,3)) for file_name in list_file])
 
     x_train = data_train_gan
+    # We will do 10000 iterations. Every iteration we process 40 batches
     iterations = 10000
     batch_size = 40
     save_dir = './train_output/'
 
 
     start = 0
-    dummy = 1
+    #Iterate and make a cool progress bar
     for step in tqdm(range(iterations)):
-      random_latent_vectors = np.random.normal(size = (batch_size, latent_dim))
-      generated_images = generator.predict(random_latent_vectors)
-      #print("generated images is")
-      #print(generated_images)
-      stop = start + batch_size
-      real_images = x_train[start: stop]
-      #print("reaml images is")
-      #print(real_images)
-      combined_images = np.concatenate([generated_images, real_images])
-      labels = np.concatenate([np.ones((batch_size,1)),
-                                        np.zeros((batch_size, 1))])
-      labels += 0.05 * np.random.random(labels.shape)
+        # Generate random noise in a probability distribution such as normal distribution.
+        random_latent_vectors = np.random.normal(size = (batch_size, latent_dim))
+        generated_images = generator.predict(random_latent_vectors)
 
-      d_loss = discriminator.train_on_batch(combined_images, labels)
+        # Combine the generated fake data with the data that is sampled from the dataset
+        stop = start + batch_size
+        real_images = x_train[start: stop]
+        combined_images = np.concatenate([generated_images, real_images])
+        labels = np.concatenate([np.ones((batch_size,1)),np.zeros((batch_size, 1))])
 
-      random_latent_vectors = np.random.normal(size=(batch_size,
-                                                     latent_dim))
-      misleading_targets = np.zeros((batch_size, 1))
-      a_loss = gan.train_on_batch(random_latent_vectors,
-                                  misleading_targets)
-      start += batch_size
+        # Add noise to the label of the input
+        labels += 0.05 * np.random.random(labels.shape)
 
-      if start > len(x_train) - batch_size:
-        start = 0
+        # Train the Discriminator
+        d_loss = discriminator.train_on_batch(combined_images, labels)
 
-      if step % 10 == 0:
-        print('discriminator loss:', d_loss)
-        print('advesarial loss:', a_loss)
-        fig, axes = plt.subplots(2, 2)
-        fig.set_size_inches(2,2)
-        count = 0
-        for i in range(2):
-          for j in range(2):
-            axes[i, j].imshow(resize(generated_images[count], (80,80)))
-            axes[i, j].axis('off')
-            count += 1
-        plt.savefig(save_dir+str(dummy)+'.png')
+        # Train the Generator
+        random_latent_vectors = np.random.normal(size=(batch_size,latent_dim))
+        misleading_targets = np.zeros((batch_size, 1))
+        a_loss = gan.train_on_batch(random_latent_vectors, misleading_targets)
 
-      if step % 100 == 0:
-        # Save the weight. If you want to train for a long time, make sure to save
-        # in your drive. Mount your drive here. Google on how to mount your drive
-        # into colab
-        #gan.save_weights('model.h5')
+        # Update the start index of the real dataset
+        start += batch_size
 
-        print('discriminator loss:', d_loss)
-        print('advesarial loss:', a_loss)
-    plt.show()
+        if start > len(x_train) - batch_size:
+            start = 0
+
+        # Print the loss and also save the faces generated by generator into train_output
+        if step % 10 == 0:
+            print('discriminator loss:', d_loss)
+            print('advesarial loss:', a_loss)
+            fig, axes = plt.subplots(2, 2)
+            fig.set_size_inches(2,2)
+            count = 0
+            for i in range(2):
+              for j in range(2):
+                  axes[i, j].imshow(resize(generated_images[count], (80,80)))
+                  axes[i, j].axis('off')
+                  count += 1
+            plt.savefig(save_dir+str(step)+'.png') # Every step % 10 iteration save the images
+
+        # We save weight every 100 steps
+        if step % 100 == 0:
+            gan.save_weights('model.h5') #pretty large file, comment out if running locally
+    print("Finished")
 
 if __name__== "__main__":
     main()
