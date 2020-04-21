@@ -43,17 +43,17 @@ import os
 from tqdm import tqdm
 
 
-# Global Variables below
-latent_dim = 80 # 80 dimesnion of latent variables... user for linear algebra operation
-height = 80 # 80 Pixel Height
-width = 80 # 80 Pixel Width
-channels = 3 # Every image has 3 channels: Red, Green, and Blue (RGB)
 
 
 def main():
     # Print out super cool ASCII art banner
     custom_fig = Figlet(font='starwars')
     print(custom_fig.renderText('Hello World From VGC_GAN.py!!'))
+    # Global Variables below
+    latent_dim = 80 # 80 dimesnion of latent variables... user for linear algebra operation
+    height = 80 # 80 Pixel Height
+    width = 80 # 80 Pixel Width
+    channels = 3 # Every image has 3 channels: Red, Green, and Blue (RGB)
 
     # Generator
     print("\nLet us build our generator\n")
