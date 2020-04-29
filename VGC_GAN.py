@@ -167,7 +167,7 @@ def main():
 
     x = layers.Dropout(0.4)(x)
 
-    x = layers.Dense(1, activation = 'sigmoid')(x)
+    x = layers.Dense(1, activation = 'relu')(x)
 
     discriminator = keras.models.Model(discriminator_input, x)
     discriminator.summary()
