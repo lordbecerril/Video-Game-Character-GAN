@@ -37,16 +37,16 @@ import numpy as np
 
 # Libraries for file management
 from shutil import copyfile
-import os
+import os, sys
 
 # Progress bar library
 from tqdm import tqdm
 
 
 # Global Variables below
-latent_dim = 80 # 80 dimesnion of latent variables... user for linear algebra operation
-height = 80 # 80 Pixel Height
-width = 80 # 80 Pixel Width
+latent_dim = 32 # 80 dimesnion of latent variables... user for linear algebra operation
+height = 32 # 80 Pixel Height
+width = 32 # 80 Pixel Width
 channels = 3 # Every image has 3 channels: Red, Green, and Blue (RGB)
 
 
@@ -96,19 +96,19 @@ def main():
     '''
     generator_input = keras.Input(shape=(latent_dim,))
 
-    x = layers.Dense(160 * 40 * 40)(generator_input)
+    x = layers.Dense(128 * 16 * 16)(generator_input)
     x = layers.LeakyReLU()(x)
-    x = layers.Reshape((40, 40, 160))(x)
+    x = layers.Reshape((16, 16, 128))(x)
 
-    x = layers.Conv2D(320, 5, padding='same')(x)
-    x = layers.LeakyReLU()(x)
-
-    x = layers.Conv2DTranspose(320, 4, strides=2, padding='same')(x)
+    x = layers.Conv2D(256, 5, padding='same')(x)
     x = layers.LeakyReLU()(x)
 
-    x = layers.Conv2D(320, 5, padding='same')(x)
+    x = layers.Conv2DTranspose(256, 4, strides=2, padding='same')(x)
     x = layers.LeakyReLU()(x)
-    x = layers.Conv2D(320, 5, padding='same')(x)
+
+    x = layers.Conv2D(256, 5, padding='same')(x)
+    x = layers.LeakyReLU()(x)
+    x = layers.Conv2D(256, 5, padding='same')(x)
     x = layers.LeakyReLU()(x)
 
     x = layers.Conv2D(channels, 7, activation='tanh', padding='same')(x)
@@ -154,13 +154,13 @@ def main():
     print("Let us build our discriminator")
     print("\n")
     discriminator_input = layers.Input(shape = (height, width, channels))
-    x = layers.Conv2D(160, 3)(discriminator_input)
-    x = layers.LeakyReLU(0.2)(x)
-    x = layers.Conv2D(160, 4, strides = 2)(x)
-    x = layers.LeakyReLU(0.2)(x)
-    x = layers.Conv2D(160, 4, strides = 2)(x)
+    x = layers.Conv2D(128, 3)(discriminator_input)
+    x = layers.LeakyReLU(0.3)(x)
+    x = layers.Conv2D(128, 4, strides = 2)(x)
+    x = layers.LeakyReLU(0.3)(x)
+    x = layers.Conv2D(128, 4, strides = 2)(x)
     x = layers.LeakyReLU()(x)
-    x = layers.Conv2D(160, 4, strides = 2)(x)
+    x = layers.Conv2D(128, 4, strides = 2)(x)
     x = layers.LeakyReLU()(x)
 
     x = layers.Flatten()(x)
@@ -214,7 +214,7 @@ def main():
     print("\n")
     list_file = os.listdir(os.fsencode("./Data/train_data/rgb_images"))
 
-    data_train_gan = np.array([resize(imread(os.path.join('./Data/train_data/rgb_images',file_name.decode("utf-8"))), (80, 80,3)) for file_name in list_file])
+    data_train_gan = np.array([resize(imread(os.path.join('./Data/train_data/rgb_images',file_name.decode("utf-8"))), (32, 32,3)) for file_name in list_file])
 
     x_train = data_train_gan
     # We will do 10000 iterations. Every iteration we process 40 batches
