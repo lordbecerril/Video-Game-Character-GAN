@@ -80,17 +80,22 @@ def main():
     channels = 3 # Every image has 3 channels: Red, Green, and Blue (RGB)
     # Generator
     generator_input = keras.Input(shape=(latent_dim,))
+    #Transform input into a 16x16 128 channel feature map
     x = layers.Dense(128 * 16 * 16)(generator_input)
     x = layers.LeakyReLU()(x)
     x = layers.Reshape((16, 16, 128))(x)
+
     x = layers.Conv2D(256, 5, padding='same')(x)
     x = layers.LeakyReLU()(x)
+    # upsample to 32 x 32
     x = layers.Conv2DTranspose(256, 4, strides=2, padding='same')(x)
     x = layers.LeakyReLU()(x)
+
     x = layers.Conv2D(256, 5, padding='same')(x)
     x = layers.LeakyReLU()(x)
     x = layers.Conv2D(256, 5, padding='same')(x)
     x = layers.LeakyReLU()(x)
+    # Produce 32x32 image
     x = layers.Conv2D(channels, 7, activation='tanh', padding='same')(x)
     generator = keras.models.Model(generator_input, x)
     generator.summary()
@@ -135,19 +140,27 @@ def main():
     discriminator_input = layers.Input(shape = (height, width, channels))
     x = layers.Conv2D(128, 3)(discriminator_input)
     x = layers.LeakyReLU()(x)
+
     x = layers.Conv2D(128, 4, strides = 2)(x)
     x = layers.LeakyReLU()(x)
+
     x = layers.Conv2D(128, 4, strides = 2)(x)
     x = layers.LeakyReLU()(x)
+
     x = layers.Conv2D(128, 4, strides = 2)(x)
     x = layers.LeakyReLU()(x)
+
     x = layers.Flatten()(x)
+
     x = layers.Dropout(0.4)(x)
+
     x = layers.Dense(1, activation = 'sigmoid')(x)
+
     discriminator = keras.models.Model(discriminator_input, x)
     discriminator.summary()
     discriminator_optimizer = keras.optimizers.RMSprop(lr=0.0008, clipvalue=1.0, decay=1e-8)
     discriminator.compile(optimizer=discriminator_optimizer, loss='binary_crossentropy')
+
     print("\n")
     print("Let us build our actual GAN now")
     print("\n")
