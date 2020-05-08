@@ -3,7 +3,7 @@
         Eric Becerril-Blas    <Github: https://github.com/lordbecerril>
         Itzel Becerril        <Github: https://github.com/HadidBuilds>
         Erving Marure Sosa    <Github: https://eems20.github.io/>
-        
+
  PURPOSE:
         We process the data and generate video game characters.
         Using a Deep Convolutional Generative Adversial Network.
@@ -34,11 +34,7 @@ from tqdm import tqdm
 
 def main():
     # Global Variables below
-    latent_dim = 32 # 32 dimesnion of latent variables... user for linear algebra operation
-    height = 32 # 32 Pixel Height
-    width = 32 # 32 Pixel Width
-    channels = 3 # Every image has 3 channels: Red, Green, and Blue (RGB)
-    # Generator
+
     print("\nLet us build our generator\n")
     '''
         Let us begin creating the GENERATOR!!! (https://www.youtube.com/watch?v=AJtedULP6fQ)
@@ -77,6 +73,12 @@ def main():
         Non-trainable params: 0
         _________________________________________________________________
     '''
+
+    latent_dim = 32 # 32 dimesnion of latent variables... user for linear algebra operation
+    height = 32 # 32 Pixel Height
+    width = 32 # 32 Pixel Width
+    channels = 3 # Every image has 3 channels: Red, Green, and Blue (RGB)
+    # Generator
     generator_input = keras.Input(shape=(latent_dim,))
     x = layers.Dense(128 * 16 * 16)(generator_input)
     x = layers.LeakyReLU()(x)
@@ -144,6 +146,8 @@ def main():
     x = layers.Dense(1, activation = 'sigmoid')(x)
     discriminator = keras.models.Model(discriminator_input, x)
     discriminator.summary()
+    discriminator_optimizer = keras.optimizers.RMSprop(lr=0.0008, clipvalue=1.0, decay=1e-8)
+    discriminator.compile(optimizer=discriminator_optimizer, loss='binary_crossentropy')
     print("\n")
     print("Let us build our actual GAN now")
     print("\n")
@@ -166,8 +170,7 @@ def main():
         Non-trainable params: 790,913
         _________________________________________________________________
     '''
-    discriminator_optimizer = keras.optimizers.RMSprop(lr=0.0008, clipvalue=1.0, decay=1e-8)
-    discriminator.compile(optimizer=discriminator_optimizer, loss='binary_crossentropy')
+
     discriminator.trainable = False
     gan_input = keras.Input(shape=(latent_dim,))
     gan_output = discriminator(generator(gan_input))

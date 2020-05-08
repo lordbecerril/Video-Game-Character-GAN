@@ -36,14 +36,14 @@ for file in os.listdir(directory):
     if filename.endswith(".png"):
         print(".png file found")
         print(file.decode("utf-8"))
-        image = PIL.Image.open("./data/"+ str(file.decode("utf-8"))).convert('LA')
+        image = PIL.Image.open("./data/"+ str(file.decode("utf-8")))
         width, height = image.size
         print(width, height)
-        if width != 80:
+        if width != 32:
             #Resize image to 100x100 pixels
-            new_image = image.resize((80,80))
+            new_image = image.resize((32,32))
             image = new_image
-        image.save('../Data/train_data/grayscale_images/'+str(count)+".png")
+        image.save('../Data/train_data/rgb_images/'+str(count)+".png")
         count += 1
         continue
     else:
